@@ -23,7 +23,7 @@ Sub VBAExportForGit()
                                         projectFolderPath, workbookName)
     Call OpenCommandPrompt(projectFolderPath)
     Call CopyGitIgnore(projectFolderPath)
-    ThisWorkbook.Close
+    'ThisWorkbook.Close
     
 End Sub
 
@@ -81,14 +81,14 @@ End Function
 Sub CopyGitIgnore(folderPath As String)
     'chr(34) = double quotes, to ensure that any
     'spaces in the file path don't cause problems.
-    Shell "cmd /c copy /a /v /y " & IGNORE_LIST & " " _
+    Shell "cmd /c copy /a /v /y " & Chr(34) & ThisWorkbook.path & "\" & IGNORE_LIST & Chr(34) & " " _
             & Chr(34) & folderPath & "\.gitignore" & Chr(34)
     
 End Sub
 
 'opens a command prompt window at folderPath
 Sub OpenCommandPrompt(folderPath As String)
-    Shell "cmd /K cd " & Chr(34) & folderPath & Chr(34), vbNormalFocus
+    Shell "cmd /k cd /d " & Chr(34) & folderPath & Chr(34), vbNormalFocus
     
 End Sub
 
