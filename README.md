@@ -7,7 +7,7 @@ A VBA Module to export all modules, classes and forms in a file, open a command 
 
 ## How to use:
 * Create a new ".xlsm" file, name it something convenient, and import ExportModule.bas
-* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment*
+* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment)*
 * Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
 * Make Changes to your vba code.
 * Run the macro.
