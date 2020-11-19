@@ -12,13 +12,12 @@ Microsoft Scripting Runtime and Microsoft Visual Basic for Applications Extensib
 * Make Changes to your vba code.
 * Run the macro.
 * Run your desired git commands in the command prompt window that is opened.
-* That's it!
 
 ## What it does:
-l. Loops through all components in the active workbook.
-l. Creates a "source" folder in the same directory as the workbook file.
-l. Creates a subdirectory in the "source" directory based on the workbook's name. *(This is done in case you have multiple workbooks that are all part of the same project, so that you can keep them separate from eachother.)*
-l. Copies ignorelist.txt to a .gitignore file inside the "source" folder.
-l. Opens a command prompt in the source folder.
+1. Loops through all components in the active workbook.
+1. Creates a "source" folder in the same directory as the workbook file.
+1. Creates a subdirectory in the "source" directory based on the workbook's name. *(This is done in case you have multiple workbooks that are all part of the same project, so that you can keep them separate from eachother.)*
+1. Copies ignorelist.txt to a .gitignore file inside the "source" folder.
+1. Opens a command prompt in the source folder.
 
 ### I hope this contributes to improving your VBA coding workflow!
