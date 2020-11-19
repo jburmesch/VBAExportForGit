@@ -17,6 +17,7 @@ Microsoft Scripting Runtime and Microsoft Visual Basic for Applications Extensib
 1. Loops through all components in the active workbook.
 1. Creates a "source" folder in the same directory as the workbook file.
 1. Creates a subdirectory in the "source" directory based on the workbook's name. *(This is done in case you have multiple workbooks that are all part of the same project, so that you can keep them separate from eachother.)*
+1. Exports all modules, classes and forms, and saves them in workbook name subdirectory.
 1. Copies ignorelist.txt to a .gitignore file inside the "source" folder.
 1. Opens a command prompt in the source folder.
 
