@@ -1,5 +1,5 @@
 # VBAExportForGit
-A VBA Macro to export all modules, classes and forms in a file, open a command prompt in the folder where they are exported, and set up a .gitignore there.
+A VBA Module to export all modules, classes and forms in a file, open a command prompt in the folder where they are exported, and set up a .gitignore there.
 
 ## Requirements:
 * "Trust access to the VBA project object model" must be checked in the Excel Trust Center. *(Under "Macro Settings")*
