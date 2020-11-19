@@ -2,8 +2,8 @@
 A VBA Macro to export all modules, classes and forms in a file, open a command prompt in the folder where they are exported, and set up a .gitignore there.
 
 ## Requirements:
-"Trust access to the VBA project object model" must be checked in the Excel Trust Center. (Under "Macro Settings")
-Microsoft Scripting Runtime and Microsoft Visual Basic for Applications Extensibility references must be enabled.
+* "Trust access to the VBA project object model" must be checked in the Excel Trust Center. (Under "Macro Settings")
+* Microsoft Scripting Runtime and Microsoft Visual Basic for Applications Extensibility references must be enabled.
 
 ## How to use:
 * Create a new ".xlsm" file, name it something convenient, and import ExportModule.bas
