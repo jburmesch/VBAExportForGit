@@ -21,9 +21,9 @@ Sub VBAExportForGit()
     
     Call ExportComponents(project.VBComponents, _
                                         projectFolderPath, workbookName)
-    Call OpenCommandPrompt(projectFolderPath)
     Call CopyGitIgnore(projectFolderPath)
-    'ThisWorkbook.Close
+    Call OpenCommandPrompt(projectFolderPath)
+    ThisWorkbook.Close
     
 End Sub
 
@@ -79,12 +79,25 @@ End Function
 
 'copys IGNORE_LIST file into a .gitignore inside folderPath
 Sub CopyGitIgnore(folderPath As String)
-    'chr(34) = double quotes, to ensure that any
-    'spaces in the file path don't cause problems.
-    Shell "cmd /c copy /a /v /y " & Chr(34) & ThisWorkbook.path & "\" & IGNORE_LIST & Chr(34) & " " _
-            & Chr(34) & folderPath & "\.gitignore" & Chr(34)
+    If Not FileExists(folderPath & "\.gitignore") Then
+        'chr(34) = double quotes, to ensure that any
+        'spaces in the file path don't cause problems.
+        Shell "cmd /c copy /a /v /y " _
+                 & Chr(34) & ThisWorkbook.path & "\" & IGNORE_LIST & Chr(34) _
+                 & " " & Chr(34) & folderPath & "\.gitignore" & Chr(34)
+    
+    End If
     
 End Sub
+
+
+Function FileExists(filePath As String) As Boolean
+    Dim fso As New FileSystemObject
+    FileExists = False
+    
+    If fso.FileExists(filePath) Then FileExists = True
+        
+End Function
 
 'opens a command prompt window at folderPath
 Sub OpenCommandPrompt(folderPath As String)
