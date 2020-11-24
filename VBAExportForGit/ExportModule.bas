@@ -6,28 +6,6 @@ Const EXPORT_FOLDER_NAME As String = "source"
 Const IGNORE_LIST As String = "ignorelist.txt"
 
 
-'Exports all components from active workbook
-Sub VBAExportForGit()
-    Dim wb As Workbook
-    Dim project As VBProject
-    Dim projectFolderPath As String
-    Dim workbookName As String
-    
-    Set wb = ActiveWorkbook
-    Set project = wb.VBProject
-    
-    workbookName = Split(wb.Name, ".")(0)
-    projectFolderPath = wb.path & "\" & EXPORT_FOLDER_NAME
-    
-    Call ExportComponents(project.VBComponents, _
-                                        projectFolderPath, workbookName)
-    Call CopyGitIgnore(projectFolderPath)
-    Call OpenCommandPrompt(projectFolderPath)
-    ThisWorkbook.Close
-    
-End Sub
-
-
 'Creates export folder and subfolder if they don't exist, and exports components there.
 Sub ExportComponents(components As VBComponents, _
                                     projectFolderPath As String, workbookName As String)
@@ -53,9 +31,9 @@ Function CreateFolders(projectFolderPath As String, subFolderName As String) As 
     
     Dim subFolderPath As String
     
-    Call EnsureFolderExists(projectFolderPath)
+    If Not FolderExists(projectFolderPath) Then Call CreateFolder(projectFolderPath)
     subFolderPath = projectFolderPath & "\" & subFolderName
-    Call EnsureFolderExists(subFolderPath)
+    If Not FolderExists(subFolderPath) Then Call CreateFolder(subFolderPath)
     CreateFolders = subFolderPath
     
 End Function
@@ -117,12 +95,13 @@ End Function
 
 'adapted from: https://stackoverflow.com/questions/
 '10803834/create-a-folder-and-sub-folder-in-excel-vba
-Sub EnsureFolderExists(path As String)
+Function FolderExists(path As String)
     Dim fso As New FileSystemObject
+    FolderExists = False
     
-    If Not fso.FolderExists(path) Then Call CreateFolder(path)
+    If fso.FolderExists(path) Then FolderExists = True
     
-End Sub
+End Function
 
 
 'adapted from: https://stackoverflow.com/questions/
