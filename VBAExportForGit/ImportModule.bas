@@ -6,16 +6,11 @@ Const IMPORT_FOLDER_NAME As String = "source"
 Const ALWAYS_PICK_FILES As Boolean = False
 
 
-Function GetImportFiles() As String()
-    Dim wb As Workbook
+Function GetImportFiles(wb As Workbook, fileTypes As Variant) As Variant
     Dim workbookName As String
     Dim importFolder As String
     Dim files As Variant
-    Dim fileTypes As Variant
-
-    fileTypes = Array(".bas", ".cls", ".frm")
     
-    Set wb = ActiveWorkbook
     workbookName = Split(wb.Name, ".")(0)
     importFolder = wb.path & "\" & IMPORT_FOLDER_NAME & "\" & workbookName
     
@@ -32,6 +27,8 @@ Function GetImportFiles() As String()
         End If
         
     End If
+    GetImportFiles = files
+    
 End Function
 
 
@@ -111,3 +108,13 @@ Function ExtensionInArray(entry As Variant, theArray As Variant) As Boolean
     Next
 
 End Function
+
+Sub Import(importFiles As Variant, wb As Workbook)
+    Dim i As Integer
+    
+    For i = 1 To UBound(importFiles)
+        wb.VBProject.VBComponents.Import importFiles(i)
+    
+    Next
+    
+End Sub

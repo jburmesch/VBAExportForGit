@@ -27,10 +27,19 @@ Sub VBAExportForGit()
 End Sub
 
 
+'Imports all components in active workbook's source folder if it exists.
+'Otherwise, opens file dialogue to select components to import.
 Sub VBAImportForGit()
-    Dim importFiles() As String
+    Dim importFiles As Variant
+    Dim fileTypes As Variant
+    Dim wb As Workbook
     
-    importFiles = GetImportFiles
+    Set wb = ActiveWorkbook
+    fileTypes = Array(".bas", ".cls", ".frm")
+    
+    importFiles = GetImportFiles(wb, fileTypes)
+    Call Import(importFiles, wb)
+    ThisWorkbook.Close
     
 End Sub
 
