@@ -27,6 +27,15 @@ Sub VBAExportForGit()
 End Sub
 
 
+Sub VBAImportForGit()
+    Dim importFiles() As String
+    
+    importFiles = GetImportFiles
+    
+End Sub
+
+
+'Open a command line in the source folder
 Sub OpenCMDOnly()
     Dim wb As Workbook
     Dim projectFolderPath As String
