@@ -3,7 +3,7 @@ Option Explicit
 
 
 Const IMPORT_FOLDER_NAME As String = "source"
-Const ALWAYS_PICK_FILES As Boolean = True
+Const ALWAYS_PICK_FILES As Boolean = False
 
 
 Function GetImportFiles() As String()
@@ -13,7 +13,7 @@ Function GetImportFiles() As String()
     Dim files As Variant
     Dim fileTypes As Variant
 
-    fileTypes = Array("*.bas", "*.cls", "*.frm")
+    fileTypes = Array(".bas", ".cls", ".frm")
     
     Set wb = ActiveWorkbook
     workbookName = Split(wb.Name, ".")(0)
@@ -27,7 +27,7 @@ Function GetImportFiles() As String()
             files = PickFiles("Please pick files to import", importFolder, fileTypes)
         
         Else
-            files = AllImportableFiles(importFolder)
+            files = AllImportableFiles(importFolder, fileTypes)
             
         End If
         
@@ -45,9 +45,12 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
     With Application.FileDialog(msoFileDialogFilePicker)
         If Not IsMissing(prompt) Then .Title = prompt
         If Not IsMissing(folderPath) Then .InitialFileName = folderPath
+        If Not IsMissing(fileTypes) Then
+            .Filters.Clear
+            .Filters.Add "File type", "*" & Join(fileTypes, ", *")
+        
+        End If
         .AllowMultiSelect = True
-        .Filters.Clear
-        .Filters.Add "File type", Join(fileTypes, ", ")
         If .Show <> 0 And .SelectedItems.Count <> 1 Then
             ReDim results(1 To .SelectedItems.Count)
             For Each item In .SelectedItems
@@ -66,6 +69,45 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
     
 End Function
 
-Function AllImportableFiles(importFolder As String) As String()
+Function AllImportableFiles(importFolder As String, Optional fileTypes As Variant) As Variant
+    Dim fso As New FileSystemObject
+    Dim fol As Variant
+    Dim fil As Variant
+    Dim files As Variant
+    Dim result() As Variant
+    ReDim result(0)
+    
+    Set fol = fso.GetFolder(importFolder)
+    For Each fil In fol.files
+        If ExtensionInArray(fil.Name, fileTypes) Then
+            If IsEmpty(result(0)) Then
+                result(0) = fil.Name
+                
+            Else
+                ReDim Preserve result(UBound(result) + 1)
+                result(UBound(result)) = fil.Name
+            
+            End If
+        
+        End If
+    
+    Next
+    AllImportableFiles = result
+    
+End Function
+
+
+Function ExtensionInArray(entry As Variant, theArray As Variant) As Boolean
+    Dim item As Variant
+    
+    ExtensionInArray = False
+    For Each item In theArray
+        If Right(entry, Len(item)) = item Then
+            ExtensionInArray = True
+            Exit For
+        
+        End If
+    
+    Next
 
 End Function
