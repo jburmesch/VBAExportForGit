@@ -109,12 +109,65 @@ Function ExtensionInArray(entry As Variant, theArray As Variant) As Boolean
 
 End Function
 
-Sub Import(importFiles As Variant, wb As Workbook)
-    Dim i As Integer
+
+Function ComponentExists(componentPath As String, components As VBComponents) As Boolean
+    Dim c As VBComponent
     
-    For i = 1 To UBound(importFiles)
-        wb.VBProject.VBComponents.Import importFiles(i)
+    ComponentExists = False
+    For Each c In components
+        If c.Name = GetComponentName(componentPath) Then
+            ComponentExists = True
+            Exit For
+        
+        End If
     
     Next
     
+End Function
+
+
+Function GetComponentName(componentPath As String) As String
+    Dim folderSplit As Variant
+    Dim fileName As String
+    
+    folderSplit = Split(componentPath, "\")
+    fileName = Split(folderSplit(UBound(folderSplit)), ".")(0)
+    GetComponentName = fileName
+    
+End Function
+
+Sub Import(importFiles As Variant, wb As Workbook)
+    Dim i As Integer
+    Dim components As VBComponents
+    
+    Set components = wb.VBProject.VBComponents
+    For i = 1 To UBound(importFiles)
+        componentName = GetComponentName(importFiles(i))
+        If ComponentExists(componentName, components) Then
+            If PromptForOverwrite Then
+                components.Remove components(componentName)
+                components.Import importFiles(i)
+                
+            End If
+            
+         End If
+         
+    Next
+    
 End Sub
+
+
+Function PromptForOverwrite(componentName As String) As Boolean
+    Dim ans As Variant
+    
+    PromptForOverwrite = False
+    ans = MsgBox(componentName & " already exists in this workbook.  Would you like to overwrite it?", vbYesNoCancel)
+    If ans = vbCancel Then
+        End
+        
+    ElseIf ans = vbYes Then
+        PromptForOverwrite = True
+        
+    End If
+    
+End Function
