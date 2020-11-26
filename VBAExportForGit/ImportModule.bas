@@ -66,6 +66,7 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
     
 End Function
 
+
 Function AllImportableFiles(importFolder As String, Optional fileTypes As Variant) As Variant
     Dim fso As New FileSystemObject
     Dim fol As Variant
@@ -110,12 +111,12 @@ Function ExtensionInArray(entry As Variant, theArray As Variant) As Boolean
 End Function
 
 
-Function ComponentExists(componentPath As String, components As VBComponents) As Boolean
+Function ComponentExists(componentName As String, components As VBComponents) As Boolean
     Dim c As VBComponent
     
     ComponentExists = False
     For Each c In components
-        If c.Name = GetComponentName(componentPath) Then
+        If c.Name = componentName Then
             ComponentExists = True
             Exit For
         
@@ -126,7 +127,7 @@ Function ComponentExists(componentPath As String, components As VBComponents) As
 End Function
 
 
-Function GetComponentName(componentPath As String) As String
+Function GetComponentName(componentPath As Variant) As String
     Dim folderSplit As Variant
     Dim fileName As String
     
@@ -136,16 +137,21 @@ Function GetComponentName(componentPath As String) As String
     
 End Function
 
+
 Sub Import(importFiles As Variant, wb As Workbook)
     Dim i As Integer
     Dim components As VBComponents
+    Dim componentName As String
     
     Set components = wb.VBProject.VBComponents
     For i = 1 To UBound(importFiles)
         componentName = GetComponentName(importFiles(i))
         If ComponentExists(componentName, components) Then
-            If PromptForOverwrite Then
+            If PromptForOverwrite(componentName) Then
                 components.Remove components(componentName)
+                components.Import importFiles(i)
+                
+            Else
                 components.Import importFiles(i)
                 
             End If
