@@ -73,17 +73,17 @@ Function AllImportableFiles(importFolder As String, Optional fileTypes As Varian
     Dim fil As Variant
     Dim files As Variant
     Dim result() As Variant
-    ReDim result(0)
+    ReDim result(1 To 1)
     
     Set fol = fso.GetFolder(importFolder)
     For Each fil In fol.files
         If ExtensionInArray(fil.Name, fileTypes) Then
-            If IsEmpty(result(0)) Then
-                result(0) = fil.Name
+            If IsEmpty(result(1)) Then
+                result(1) = importFolder & "\" & fil.Name
                 
             Else
-                ReDim Preserve result(UBound(result) + 1)
-                result(UBound(result)) = fil.Name
+                ReDim Preserve result(1 To UBound(result) + 1)
+                result(UBound(result)) = importFolder & "\" & fil.Name
             
             End If
         
