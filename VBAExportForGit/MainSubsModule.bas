@@ -48,9 +48,25 @@ End Sub
 Sub OpenCMDOnly()
     Dim wb As Workbook
     Dim projectFolderPath As String
+    Dim ans As Variant
     
     Set wb = ActiveWorkbook
     projectFolderPath = wb.path & "\" & EXPORT_FOLDER_NAME
-    Call OpenCommandPrompt(projectFolderPath)
+    If FolderExists(projectFolderPath) Then
+        Call OpenCommandPrompt(projectFolderPath)
+    Else
+        ans = MsgBox("No " & EXPORT_FOLDER_NAME & " folder exists for this workbook. " _
+                              & "Would you like to open a command prompt in the workbbook " _
+                              & "directory?", vbYesNo)
+        If ans = vbYes Then
+            Call OpenCommandPrompt(wb.path)
+        
+        Else
+            End
+            
+        End If
+    
+    End If
+    ThisWorkbook.Close
     
 End Sub
