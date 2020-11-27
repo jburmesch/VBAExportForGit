@@ -34,9 +34,10 @@ Sub VBAImportForGit()
     Dim fileTypes As Variant
     Dim wb As Workbook
     
-    Set wb = ActiveWorkbook
+    'list of file extensions that we'd like to import.
     fileTypes = Array(".bas", ".cls", ".frm")
     
+    Set wb = ActiveWorkbook
     importFiles = GetImportFiles(wb, fileTypes)
     Call Import(importFiles, wb)
     ThisWorkbook.Close
@@ -48,24 +49,18 @@ End Sub
 Sub OpenCMDOnly()
     Dim wb As Workbook
     Dim projectFolderPath As String
-    Dim ans As Variant
     
     Set wb = ActiveWorkbook
     projectFolderPath = wb.path & "\" & EXPORT_FOLDER_NAME
+    'see if 'source' folder exists in activeworkbook's folder
     If FolderExists(projectFolderPath) Then
         Call OpenCommandPrompt(projectFolderPath)
-    Else
-        ans = MsgBox("No " & EXPORT_FOLDER_NAME & " folder exists for this workbook. " _
-                              & "Would you like to open a command prompt in the workbbook " _
-                              & "directory?", vbYesNo)
-        If ans = vbYes Then
-            Call OpenCommandPrompt(wb.path)
         
-        Else
-            End
-            
-        End If
-    
+    Else
+        'open cmd prompt at workbook path if user chooses to.
+        If NoExportFolderPrompt(EXPORT_FOLDER_NAME) _
+            Then Call OpenCommandPrompt(wb.path)
+        
     End If
     ThisWorkbook.Close
     
