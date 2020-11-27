@@ -22,7 +22,7 @@ Sub VBAExportForGit()
                                         projectFolderPath, workbookName)
     Call CopyGitIgnore(projectFolderPath)
     Call OpenCommandPrompt(projectFolderPath)
-    ThisWorkbook.Close
+    'ThisWorkbook.Close
     
 End Sub
 
@@ -39,7 +39,7 @@ Sub VBAImportForGit()
     
     importFiles = GetImportFiles(wb, fileTypes)
     Call Import(importFiles, wb)
-    ThisWorkbook.Close
+    'ThisWorkbook.Close
     
 End Sub
 

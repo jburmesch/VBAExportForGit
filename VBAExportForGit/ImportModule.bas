@@ -156,6 +156,9 @@ Sub Import(importFiles As Variant, wb As Workbook)
                 
             End If
             
+        Else
+            components.Import importFiles(i)
+            
          End If
          
     Next
