@@ -3,7 +3,7 @@ Option Explicit
 
 
 Const IMPORT_FOLDER_NAME As String = "source"
-Const ALWAYS_PICK_FILES As Boolean = False
+Const ALWAYS_PICK_FILES As Boolean = True
 
 
 Function GetImportFiles(wb As Workbook, fileTypes As Variant) As Variant
@@ -16,7 +16,7 @@ Function GetImportFiles(wb As Workbook, fileTypes As Variant) As Variant
     
     If Not FolderExists(importFolder) Then
         files = PickFiles(IMPORT_FOLDER_NAME _
-                                            & " folder not found. Please select files to import.", , fileTypes)
+                                & " folder not found. Please select files to import.", , fileTypes)
     Else
         If ALWAYS_PICK_FILES Then
             files = PickFiles("Please pick files to import", importFolder, fileTypes)
@@ -37,6 +37,7 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
     Dim filePicker As FileDialog
     Dim results() As Variant
     Dim item As Variant
+    Dim exitCode As Integer
     Dim i As Integer
     
     With Application.FileDialog(msoFileDialogFilePicker)
@@ -48,7 +49,8 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
         
         End If
         .AllowMultiSelect = True
-        If .Show <> 0 And .SelectedItems.Count <> 1 Then
+        exitCode = .Show
+        If exitCode <> 0 And .SelectedItems.Count <> 1 Then
             ReDim results(1 To .SelectedItems.Count)
             For Each item In .SelectedItems
                 i = i + 1
@@ -56,8 +58,11 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
             
             Next
         
-        ElseIf .Show <> 0 And .SelectedItems.Count = 1 Then
+        ElseIf exitCode <> 0 And .SelectedItems.Count = 1 Then
             results(1) = .SelectedItems(1)
+        
+        Else
+            End
         
         End If
         
@@ -67,7 +72,8 @@ Function PickFiles(Optional prompt As String, Optional folderPath As String, _
 End Function
 
 
-Function AllImportableFiles(importFolder As String, Optional fileTypes As Variant) As Variant
+Function AllImportableFiles(importFolder As String, _
+                                          Optional fileTypes As Variant) As Variant
     Dim fso As New FileSystemObject
     Dim fol As Variant
     Dim fil As Variant
@@ -111,7 +117,8 @@ Function ExtensionInArray(entry As Variant, theArray As Variant) As Boolean
 End Function
 
 
-Function ComponentExists(componentName As String, components As VBComponents) As Boolean
+Function ComponentExists(componentName As String, _
+                                        components As VBComponents) As Boolean
     Dim c As VBComponent
     
     ComponentExists = False
@@ -170,7 +177,8 @@ Function PromptForOverwrite(componentName As String) As Boolean
     Dim ans As Variant
     
     PromptForOverwrite = False
-    ans = MsgBox(componentName & " already exists in this workbook.  Would you like to overwrite it?", vbYesNoCancel)
+    ans = MsgBox(componentName & " already exists in this workbook. " _
+                          & "Would you like to overwrite it?", vbYesNoCancel)
     If ans = vbCancel Then
         End
         
