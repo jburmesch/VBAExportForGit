@@ -14,12 +14,9 @@ Sub ExportComponents(components As VBComponents, _
     Dim filePath As String
     
     For Each component In components
-        If IsExportable(component) Then
-            wbFolderPath = CreateFolders(projectFolderPath, workbookName)
-            filePath = SetFilePath(wbFolderPath, component)
-            component.Export filePath
-            
-        End If
+        wbFolderPath = CreateFolders(projectFolderPath, workbookName)
+        filePath = SetFilePath(wbFolderPath, component)
+        component.Export filePath
         
     Next
     
@@ -35,22 +32,6 @@ Function CreateFolders(projectFolderPath As String, subFolderName As String) As 
     subFolderPath = projectFolderPath & "\" & subFolderName
     If Not FolderExists(subFolderPath) Then Call CreateFolder(subFolderPath)
     CreateFolders = subFolderPath
-    
-End Function
-
-
-'checks component types to see if they should be exported
-Function IsExportable(component As VBComponent) As Boolean
-    If component.Type = vbext_ct_ClassModule _
-        Or component.Type = vbext_ct_MSForm _
-        Or component.Type = vbext_ct_StdModule _
-    Then
-        IsExportable = True
-    
-    Else
-        IsExportable = False
-    
-    End If
     
 End Function
 
@@ -123,6 +104,9 @@ End Sub
 'returns the appropriate extension based on the component type
 Function GetExtension(component As VBComponent) As String
     Select Case component.Type
+    
+    Case vbext_ct_Document
+        GetExtension = ".cls"
         
     Case vbext_ct_ClassModule
         GetExtension = ".cls"
