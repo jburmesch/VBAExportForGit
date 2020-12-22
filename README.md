@@ -13,19 +13,48 @@ This project contains 3 main subs which are designed to make using git with vba 
 A VBA Module to export all modules, classes and forms in a file, open a command prompt in the folder where they are exported, and set up a .gitignore there.
 
 ### How to use:
-* Create a new ".xlsm" file, name it something convenient, and import ExportModule.bas
-* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment*
+* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
+* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment)*
 * Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
 * Make Changes to your vba code.
 * Run the macro.
 * Run your desired git commands in the command prompt window that is opened.
 
-### What it does:
-1. Loops through all components in the active workbook.
-1. Creates a "source" folder in the same directory as the workbook file.
-1. Creates a subdirectory in the "source" directory based on the workbook's name. *(This is done in case you have multiple workbooks that are all part of the same project, so that you can keep them separate from eachother.)*
-1. Exports all modules, classes and forms, and saves them in workbook name subdirectory.
-1. Copies ignorelist.txt to a .gitignore file inside the "source" folder.
-1. Opens a command prompt in the source folder.
+## VBAImportForGit
+A VBA Module to import all modules, classes and forms from a 'source' folder.
+
+### How to use:
+* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
+* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment*
+* Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Create a 'source' folder in the same directory as the excel file that you want to import to.
+* Clone/Pull your repo into the source folder.
+* Run the macro from the excel file you want to import to.
+* All vba objects from the source folder will be imported.
+
+## OpenCMDOnly
+A VBA Module to import all modules, classes and forms from a 'source' folder.
+
+### How to use:
+* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
+* Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Run the macro from the file that you'd like to do verson control for. A CMD window will be opened in the 'source' folder if it exists in that location, or the option will be given to open in the file's location if no 'source' folder is found.
+
+## Basic Workflow for Exporting
+* Edit an excel file, make changes to its vba code.
+* Run VBAExportForGitMacro
+* CMD window will open
+* Run git commands in open window (add/commit/push)
+* Exit CMD window
+* Done!
+
+## Basic Workflow for Importing
+* Run OpenCMDOnly macro from file you want to import to
+* (Create 'source' folder if it doesn't exist)
+* Run git commands in source folder (clone/pull)
+* Exit CMD window
+* Run VBAImportForGit from file you want to import to
+* All objects in 'source' folder will be imported (You will be prompted to overwrite if they already exist.)
+* Done!
 
 ## I hope this contributes to improving your VBA coding workflow!
