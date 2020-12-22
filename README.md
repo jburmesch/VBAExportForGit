@@ -53,8 +53,8 @@ A VBA Module to open a CMD window in the 'source' folder, or the current excel f
 
 ## Basic Workflow for Importing
 * Run OpenCMDOnly macro from file you want to import to
-* (Create 'source' folder if it doesn't exist)
-* Run git commands in source folder (clone/pull)
+* (If cloning something new) Clone your desired repo into the same folder as your file & rename the repo folder to 'source'
+* (If pulling, etc.) Run desired git commands in 'source' folder
 * Exit CMD window
 * Run VBAImportForGit from file you want to import to
 * All objects in 'source' folder will be imported (You will be prompted to overwrite if they already exist.)
