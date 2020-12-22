@@ -27,6 +27,8 @@ A VBA Module to import all modules, classes and forms from a 'source' folder.
 * Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
 * In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment*
 * Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Save/close the workbook
+* Create a new .xlsm file, naming it *exactly the same* as the file that you want to import from. (so, if you were importing from this repo, you would name it "VBAExportForGit.xlsm")
 * Clone/Pull your repo into the same folder as your .xlsm file
 * Rename the repo folder 'source'.
 * Run the macro from the excel file you want to import to.
