@@ -59,5 +59,3 @@ A VBA Module to open a CMD window in the 'source' folder, or the current excel f
 * Run VBAImportForGit from file you want to import to
 * All objects in 'source' folder will be imported (You will be prompted to overwrite if they already exist.)
 * Done!
-
-## I hope this contributes to improving your VBA coding workflow!
