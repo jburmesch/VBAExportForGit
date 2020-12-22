@@ -15,18 +15,19 @@ A VBA Module to export all modules, classes and forms in a file, open a command 
 ### How to use:
 * Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
 * In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment)*
-* Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
-* Make Changes to your vba code.
+* Add the VBAExportForGit macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Save/close the workbook.
+* Make Changes to your vba code in another excel file.
 * Run the macro.
 * Run your desired git commands in the command prompt window that is opened.
+* All vba objects from the current file will be exported into 'source' folder (which will be created if it doesn't exist).
 
 ## VBAImportForGit
 A VBA Module to import all modules, classes and forms from a 'source' folder.
 
 ### How to use:
-* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
-* In the same folder, create an "ignorelist.txt" file, and add to it the filenames/extenstions that you'd like to be included in your default .gitignore files. *(mine is just "\*.tmp" at the moment*
-* Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo. (If you already did this, you don't need to do it again.)
+* Add the VbaImportForGit macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
 * Save/close the workbook
 * Create a new .xlsm file, naming it *exactly the same* as the file that you want to import from. (so, if you were importing from this repo, you would name it "VBAExportForGit.xlsm")
 * Clone/Pull your repo into the same folder as your .xlsm file
@@ -38,8 +39,8 @@ A VBA Module to import all modules, classes and forms from a 'source' folder.
 A VBA Module to open a CMD window in the 'source' folder, or the current excel file's folder, if no 'source' folder exists there.
 
 ### How to use:
-* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo
-* Add the macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo. (If you already did this, you don't need to do it again.)
+* Add the OpenCMDOnly macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
 * Run the macro from the file that you'd like to do verson control for. A CMD window will be opened in the 'source' folder if it exists in that location, or the option will be given to open in the file's location if no 'source' folder is found.
 
 ## Basic Workflow for Exporting
