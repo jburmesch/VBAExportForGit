@@ -27,9 +27,9 @@ A VBA Module to import all modules, classes and forms from a 'source' folder.
 
 ### How to use:
 * Create a new ".xlsm" file, name it something convenient, and import .bas and .cls files from this repo. (If you already did this, you don't need to do it again.)
-* Add the VbaImportForGit macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
+* Add the VBAImportForGit macro to Excel's Quick Access Toolbar (via "Customize the Quick Access Toolbar).
 * Save/close the workbook
-* Create a new .xlsm file, naming it *exactly the same* as the file that you want to import from. (so, if you were importing from this repo, you would name it "VBAExportForGit.xlsm")
+* Create a new .xlsm file, naming it *exactly the same* as the file that you want to import from. (so, if you were importing from this repo, you would name it "VBAExportForGit.xlsm") 
 * Clone/Pull your repo into the same folder as your .xlsm file
 * Rename the repo folder 'source'.
 * Run the macro from the excel file you want to import to.
