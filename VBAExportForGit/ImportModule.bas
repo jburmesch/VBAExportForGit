@@ -178,9 +178,14 @@ Sub Import(importFiles As Variant, wb As Workbook)
         If ComponentExists(componentName, components) Then
             'if it does, ask the user if they'd like to overwrite it
             If PromptForOverwrite(componentName) Then
-                components.Remove components(componentName)
-                components.Import importFiles(i)
+                If componentName = "ThisWorkbook" Then
+                    components.Import importFiles(i)
                 
+                Else
+                    components.Remove components(componentName)
+                    components.Import importFiles(i)
+                
+                End If
             Else
                 components.Import importFiles(i)
                 
